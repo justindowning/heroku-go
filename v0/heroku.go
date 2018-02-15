@@ -18,6 +18,7 @@ import (
 	"github.com/google/go-querystring/query"
 	"io"
 	"net/http"
+	"os"
 	"reflect"
 	"runtime"
 	"strings"
@@ -25,9 +26,9 @@ import (
 )
 
 const (
-	Version          = "v3"
-	DefaultUserAgent = "heroku/" + Version + " (" + runtime.GOOS + "; " + runtime.GOARCH + ")"
-	DefaultURL       = "https://api.heroku.com"
+	Version          = "v0"
+	DefaultUserAgent = "herokudata/" + Version + " (" + runtime.GOOS + "; " + runtime.GOARCH + ")"
+	DefaultURL       = os.Getenv("HEROKU_DATA_HOST", "https://kafka-api.heroku.com")
 )
 
 // Service represents your API.
@@ -4518,4 +4519,3 @@ func (s *Service) WhitelistedAddOnServiceDeleteByTeam(ctx context.Context, teamI
 	var whitelistedAddOnService WhitelistedAddOnService
 	return &whitelistedAddOnService, s.Delete(ctx, &whitelistedAddOnService, fmt.Sprintf("/teams/%v/whitelisted-addon-services/%v", teamIdentity, whitelistedAddOnServiceIdentity))
 }
-
