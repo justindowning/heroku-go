@@ -25,10 +25,19 @@ import (
 	"time"
 )
 
+func getenv(key, fallback string) string {
+	value := os.Getenv(key)
+	if len(value) == 0 {
+		return fallback
+	}
+	return value
+}
+
+var DefaultURL = getenv("HEROKU_DATA_HOST", "https://kafka-api.heroku.com")
+
 const (
 	Version          = "v0"
 	DefaultUserAgent = "herokudata/" + Version + " (" + runtime.GOOS + "; " + runtime.GOARCH + ")"
-	DefaultURL       = os.Getenv("HEROKU_DATA_HOST", "https://kafka-api.heroku.com")
 )
 
 // Service represents your API.
